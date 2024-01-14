@@ -7,7 +7,7 @@
           <img class="q-mt-sm" width="250px" src="../img/logo.png">
         </q-toolbar-title>
         <q-tabs v-if="showTabs" align="left">
-          <q-route-tab to="/page1" label="Page One" />
+          <q-route-tab label="About" />
           <q-btn flat color="white" label="Admissions">
             <template>
             </template>
@@ -42,8 +42,8 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <q-route-tab to="/page2" label="Page Two" />
-          <q-route-tab to="/page3" label="Page Three" />
+          <q-route-tab label="Programs" />
+          <q-route-tab label="Student Services" />
         </q-tabs>
         <q-btn v-if="!showTabs" class="btn-toggler q-mr-md" dense flat round icon="menu" @click="toggleLeftDrawer" />
       </q-toolbar>
