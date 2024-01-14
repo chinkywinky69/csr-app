@@ -144,29 +144,38 @@ const performDeletion = async (row) => {
 };
 
 //ACCEPT STUDENT
-const acceptStudent = async (row) => {
+const acceptStudent = (row) => {
+  Dialog.create({
+    title: 'Confirm Acceptance',
+    message: 'Are you sure you want to accept and verify this student?',
+    cancel: true,
+    persistent: true
+  }).onOk(() => {
+    performAcceptance(row);
+  }).onCancel(() => {
+    console.log('Acceptance canceled');
+  });
+};
+
+const performAcceptance = async (row) => {
   try {
-    // Assuming 'isVerified' is the field to indicate if a student is verified
     await updateDoc(doc(db, "members", row.id), {
       isVerified: true
     });
-
     $q.notify({
       type: "positive",
       message: "Student accepted and verified",
     });
-
+    // Refresh the list or alternatively you can fetch again from Firestore
     pendingStudents.value = pendingStudents.value.filter(user => user.id !== row.id);
   } catch (error) {
     console.error("Error accepting student: ", error);
     $q.notify({
       type: "negative",
-      message: `Error accepting student ${error.message}`,
+      message: `Error accepting student: ${error.message}`,
     });
   }
 };
-
-
 
 onMounted(() => {
   const pendingQuery = query(collection(db, "members"), where("isVerified", "==", false));
